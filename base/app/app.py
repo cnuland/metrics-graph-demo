@@ -28,7 +28,7 @@ def pi(basamak):
 @app.route("/")
 def route():
     count = request.args.get("count",  default = 0, type = int) # How far to iterat
-    return pi(count)
+    return str(pi(count))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
