@@ -26,7 +26,6 @@ def pi(basamak):
     return pi // 10**10
 
 @app.route("/")
-@trace()
 def route():
     count = request.args.get("count",  default = 0, type = int) # How far to iterat
     return pi(count)
