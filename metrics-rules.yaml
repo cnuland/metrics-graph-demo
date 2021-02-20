@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: prometheus
+  name: metrics-blog
+spec:
+  groups:
+  - name: metrics-blog
+    rules:
+    # avg cpu
+    - record: pod:container_cpu_usage:sum:avg_over_time_1week
+      expr: avg_over_time(pod:container_cpu_usage:sum[1w])
+    # std-dev cpu
+    - record: pod:container_cpu_usage:sum:stddev_over_time_1week
+      expr: stddev_over_time(pod:container_cpu_usage:sum[1w])
+

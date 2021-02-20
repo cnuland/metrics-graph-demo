@@ -1,0 +1,30 @@
+ 
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cronjob-metrics-test
+  namespace: metrics-blog
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          activeDeadlineSeconds: 900
+          containers:
+          - name: cronjob-metrics-test
+            command:
+            - /bin/bash
+            - -c
+            - |
+              random=$(awk -v min=1000 -v max=60000 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
+              echo $random
+              curl "https://metrics-demo-base-metrics-blog.apps.okd4.cjlabs.dev?count=${random}"
+            image: image-registry.openshift-image-registry.svc:5000/metrics-blog/ubi8-python:latest
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+  schedule: '*/2 * * * *'
+  startingDeadlineSeconds: 60
+  successfulJobsHistoryLimit: 5
