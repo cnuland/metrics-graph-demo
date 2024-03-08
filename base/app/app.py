@@ -3,6 +3,8 @@ from flask import _request_ctx_stack as stack
 from random import randint
 import requests
 import os
+import sys
+sys.set_int_max_str_digits(0)
 
 app = Flask(__name__)
 

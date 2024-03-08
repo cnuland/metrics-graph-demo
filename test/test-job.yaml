@@ -1,6 +1,6 @@
  
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cronjob-metrics-test
@@ -21,7 +21,7 @@ spec:
             - |
               random=$(awk -v min=1000 -v max=60000 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
               echo $random
-              curl "https://metrics-demo-base-metrics-blog.apps.okd4.cjlabs.dev?count=${random}"
+              curl "metrics-demo-base-metrics-blog.apps.rosa-mntpd.813b.p1.openshiftapps.com?count=${random}"
             image: image-registry.openshift-image-registry.svc:5000/metrics-blog/ubi8-python:latest
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
